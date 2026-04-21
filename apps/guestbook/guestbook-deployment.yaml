@@ -3,9 +3,6 @@ kind: Deployment
 metadata:
   name: guestbook-v1
   namespace: guestbook
-  labels:
-    app: guestbook
-    version: "1.0"
 spec:
   replicas: 2
   selector:
