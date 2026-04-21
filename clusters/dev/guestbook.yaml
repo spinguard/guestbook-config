@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
-  url: https://github.com/YOUR_ORG/guestbook  # replace with your repo URL
+  url: https://github.com/spinguard/guestbook-config  # replace with your repo URL
   ref:
     branch: main
 ---
