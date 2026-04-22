@@ -27,6 +27,13 @@ spec:
           ports:
             - name: http-server
               containerPort: 3000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 128Mi
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -41,7 +48,7 @@ spec:
             periodSeconds: 10
           livenessProbe:
             httpGet:
-              path: info
+              path: /info
               port: 3000
             initialDelaySeconds: 5
             periodSeconds: 10

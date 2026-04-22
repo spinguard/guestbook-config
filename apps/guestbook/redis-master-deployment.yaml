@@ -22,15 +22,33 @@ spec:
         seccompProfile:
           type: RuntimeDefault
         runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+        runAsUser: 999   # redis user in official redis:7.x image
+        runAsGroup: 999
+        fsGroup: 999     # gives redis group write access to emptyDir volumes
+      volumes:
+        - name: data
+          emptyDir: {}
       containers:
         - name: redis-master
-          image: redis:3.2.9
+          image: redis:7.2-alpine
+          args:
+            - redis-server
+            - --save ""          # disable RDB persistence (lab environment)
+            - --appendonly no
+            - --loglevel notice
           ports:
             - name: redis-server
               containerPort: 6379
+          volumeMounts:
+            - name: data
+              mountPath: /data   # writable emptyDir; satisfies readOnlyRootFilesystem
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true

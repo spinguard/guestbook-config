@@ -48,7 +48,7 @@ kubectl apply -k apps/guestbook/
 ## Getting the Guestbook URL
 
 ```bash
-kubectl get svc guestbook -n guestbook
+kubectl get svc guestbook -n guestbook 
 # Copy the EXTERNAL-IP, then open http://<EXTERNAL-IP>:3000
 ```
 
