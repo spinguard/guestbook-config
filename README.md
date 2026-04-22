@@ -67,7 +67,7 @@ export BASE_URL=http://$(kubectl get svc guestbook -n guestbook -o jsonpath='{.s
 
 # If the LoadBalancer is not set, use port forward where running k6s
 # Separate terminal window
-kubectl port-forward deploy/guestbook-v1 -n guestbook 3000:300
+kubectl port-forward deploy/guestbook-v1 -n guestbook 3000:3000
 
 # First terminal window
 export BASE_URL="http://localhost:3000"
