@@ -18,9 +18,22 @@ spec:
         app: redis
         role: slave
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       containers:
         - name: redis-slave
           image: ibmcom/guestbook-redis-slave:v2
           ports:
             - name: redis-server
               containerPort: 6379
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL

@@ -14,9 +14,34 @@ spec:
         app: guestbook
         # version: "1.0"
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       containers:
         - name: guestbook
           image: ibmcom/guestbook:v1
           ports:
             - name: http-server
               containerPort: 3000
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          readinessProbe:
+            httpGet:
+              path: /info
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: info
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
